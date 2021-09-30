@@ -3,6 +3,8 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const { google } = require("googleapis");
 const credentials = require("./credentials.json");
+const formidable = require("formidable");
+const fs = require("fs");
 
 const app = express();
 
@@ -92,6 +94,64 @@ app.post("/fileUpload", (req, res) => {
       }
     );
   });
+});
+
+app.post("/readDriveFiles", (req, res) => {
+  if (req.body.token == null) return res.status(400).send("Token cannot found");
+  oAuth2Client.setCredentials(req.body.token);
+  const drive = google.drive({ version: "v3", auth: oAuth2Client });
+  drive.files.list(
+    {
+      pageSize: 10,
+    },
+    (err, response) => {
+      if (err) {
+        console.log("The API returned an error: " + err);
+        return res.status(400).send(err);
+      }
+      const files = response.data.files;
+      if (files.length) {
+        console.log("Files:");
+        files.map((file) => {
+          console.log(`${file.name} (${file.id})`);
+        });
+      } else {
+        console.log("No files found.");
+      }
+      res.send(files);
+    }
+  );
+});
+
+app.post("/deleteFile/:id", (req, res) => {
+  if (req.body.token == null) return res.status(400).send("Token cannot found");
+  oAuth2Client.setCredentials(req.body.token);
+  const drive = google.drive({ version: "v3", auth: oAuth2Client });
+  var fileId = req.params.id;
+  drive.files.delete({ fileId: fileId }).then((response) => {
+    res.send("Successfully deleted");
+  });
+});
+
+app.post("/downloadFile/:id", (req, res) => {
+  if (req.body.token == null) return res.status(400).send("Token cannot found");
+  oAuth2Client.setCredentials(req.body.token);
+  const drive = google.drive({ version: "v3", auth: oAuth2Client });
+  var fileId = req.params.id;
+  drive.files.get(
+    { fileId: fileId, alt: "media" },
+    { responseType: "stream" },
+    function (err, response) {
+      response.data
+        .on("end", () => {
+          console.log("Successfuly downloaded");
+        })
+        .on("error", (err) => {
+          console.log("Error", err);
+        })
+        .pipe(res);
+    }
+  );
 });
 
 app.listen(PORT, () => console.log(`Server started on ${PORT}`));
