@@ -58,13 +58,13 @@ app.post("/getUserInfo", (req, res) => {
   });
 });
 
-app.post("/fileUpload", (req, res) => {
+app.post("/imageUpload", (req, res) => {
   var form = new formidable.IncomingForm();
   form.parse(req, (err, fields, files) => {
     if (err) return res.status(400).send(err);
     const token = JSON.parse(fields.token);
     console.log(token);
-    if (token == null) return res.status(400).send("Token not found");
+    if (token == null) return res.status(400).send("Token cannot found");
     oAuth2Client.setCredentials(token);
     console.log(files.file);
     const drive = google.drive({ version: "v3", auth: oAuth2Client });
@@ -87,11 +87,42 @@ app.post("/fileUpload", (req, res) => {
           console.error(err);
           res.status(400).send(err);
         } else {
-          res.send("Successful");
+          res.send("Successfully image uploaded");
         }
       }
     );
   });
+});
+
+app.post("/deleteFile/:id", (req, res) => {
+  if (req.body.token == null) return res.status(400).send("Token cannot found");
+  oAuth2Client.setCredentials(req.body.token);
+  const drive = google.drive({ version: "v3", auth: oAuth2Client });
+  var fileId = req.params.id;
+  drive.files.delete({ fileId: fileId }).then((response) => {
+    res.send(response.data);
+  });
+});
+
+app.post("/download/:id", (req, res) => {
+  if (req.body.token == null) return res.status(400).send("Token cannot found");
+  oAuth2Client.setCredentials(req.body.token);
+  const drive = google.drive({ version: "v3", auth: oAuth2Client });
+  var fileId = req.params.id;
+  drive.files.get(
+    { fileId: fileId, alt: "media" },
+    { responseType: "stream" },
+    function (err, response) {
+      response.data
+        .on("end", () => {
+          console.log("Successfuly downloaded");
+        })
+        .on("error", (err) => {
+          console.log("Error", err);
+        })
+        .pipe(res);
+    }
+  );
 });
 
 app.listen(PORT, () => console.log(`Server started on ${PORT}`));
