@@ -89,7 +89,7 @@ app.post("/fileUpload", (req, res) => {
           console.error(err);
           res.status(400).send(err);
         } else {
-          res.send("Successful");
+          res.send("Successful Uploaded");
         }
       }
     );
