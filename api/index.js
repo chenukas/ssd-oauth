@@ -3,6 +3,8 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const { google } = require("googleapis");
 const credentials = require("./credentials.json");
+const formidable = require("formidable");
+const fs = require("fs");
 
 const app = express();
 
@@ -58,13 +60,13 @@ app.post("/getUserInfo", (req, res) => {
   });
 });
 
-app.post("/imageUpload", (req, res) => {
+app.post("/fileUpload", (req, res) => {
   var form = new formidable.IncomingForm();
   form.parse(req, (err, fields, files) => {
     if (err) return res.status(400).send(err);
     const token = JSON.parse(fields.token);
     console.log(token);
-    if (token == null) return res.status(400).send("Token cannot found");
+    if (token == null) return res.status(400).send("Token not found");
     oAuth2Client.setCredentials(token);
     console.log(files.file);
     const drive = google.drive({ version: "v3", auth: oAuth2Client });
@@ -87,11 +89,38 @@ app.post("/imageUpload", (req, res) => {
           console.error(err);
           res.status(400).send(err);
         } else {
-          res.send("Successfully image uploaded");
+          res.send("Successful");
         }
       }
     );
   });
+});
+
+app.post("/readDriveFiles", (req, res) => {
+  if (req.body.token == null) return res.status(400).send("Token cannot found");
+  oAuth2Client.setCredentials(req.body.token);
+  const drive = google.drive({ version: "v3", auth: oAuth2Client });
+  drive.files.list(
+    {
+      pageSize: 10,
+    },
+    (err, response) => {
+      if (err) {
+        console.log("The API returned an error: " + err);
+        return res.status(400).send(err);
+      }
+      const files = response.data.files;
+      if (files.length) {
+        console.log("Files:");
+        files.map((file) => {
+          console.log(`${file.name} (${file.id})`);
+        });
+      } else {
+        console.log("No files found.");
+      }
+      res.send(files);
+    }
+  );
 });
 
 app.post("/deleteFile/:id", (req, res) => {
@@ -100,11 +129,11 @@ app.post("/deleteFile/:id", (req, res) => {
   const drive = google.drive({ version: "v3", auth: oAuth2Client });
   var fileId = req.params.id;
   drive.files.delete({ fileId: fileId }).then((response) => {
-    res.send(response.data);
+    res.send("Successfully deleted");
   });
 });
 
-app.post("/download/:id", (req, res) => {
+app.post("/downloadFile/:id", (req, res) => {
   if (req.body.token == null) return res.status(400).send("Token cannot found");
   oAuth2Client.setCredentials(req.body.token);
   const drive = google.drive({ version: "v3", auth: oAuth2Client });
