@@ -1,43 +1,53 @@
-import React, { Component, Fragment } from "react";
-import { Container, Row, Col, Form, Button } from "react-bootstrap";
-import "./Login.css";
-import axios from "axios";
+import React from "react";
+import { Avatar, Grid, Paper, TextField, Button } from "@material-ui/core";
+//import { LockIcon } from "@mui/icons-material";
+//import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 
-class Login extends Component {
-  render() {
-    return (
-      <Fragment>
-        <Container>
-          <Row>
-            <Col lg={6} md={6} sm={12}>
-              <div className="login-container p-5">
-                <Form>
-                  <Form.Group className="mb-3" controlId="formBasicEmail">
-                    <Form.Label>Email address</Form.Label>
-                    <Form.Control type="email" placeholder="Enter email" />
-                    <Form.Text className="text-muted">
-                      We'll never share your email with anyone else.
-                    </Form.Text>
-                  </Form.Group>
-
-                  <Form.Group className="mb-3" controlId="formBasicPassword">
-                    <Form.Label>Password</Form.Label>
-                    <Form.Control type="password" placeholder="Password" />
-                  </Form.Group>
-                  <Form.Group className="mb-3" controlId="formBasicCheckbox">
-                    <Form.Check type="checkbox" label="Check me out" />
-                  </Form.Group>
-                  <Button variant="primary" type="submit">
-                    Submit
-                  </Button>
-                </Form>
-              </div>
-            </Col>
-          </Row>
-        </Container>
-      </Fragment>
-    );
-  }
-}
+const Login = () => {
+  const paperStyle = {
+    padding: 20,
+    height: "70vh",
+    width: 280,
+    margin: "20px auto",
+    border_radius: "10px",
+  };
+  return (
+    <Grid>
+      <Paper className="login-form" elevation={10} style={paperStyle}>
+        <Grid className="login-grid" align="center">
+          <Avatar>C</Avatar>
+          <h2>Sign In</h2>
+        </Grid>
+        <TextField
+          id="outlined-basic"
+          label="E-mail"
+          placeholder="Enter email here"
+          variant="outlined"
+          fullWidth
+          required
+        />
+        <TextField
+          id="outlined-basic"
+          label="Password"
+          placeholder="Enter password here"
+          variant="outlined"
+          type="password"
+          fullWidth
+          required
+          style={{ marginTop: "5%" }}
+        />
+        <Button
+          type="submit"
+          color="primary"
+          variant="contained"
+          fullWidth
+          style={{ marginTop: "5%" }}
+        >
+          Sign In
+        </Button>
+      </Paper>
+    </Grid>
+  );
+};
 
 export default Login;
