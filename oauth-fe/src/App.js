@@ -1,12 +1,15 @@
 import React from "react";
-// import Login from "./components/Login/Login";
+import { Route, Switch } from 'react-router-dom';
+import Login from "./components/Login/Login";
 import DisplayFiles from "./components/displayFiles";
 
 function App() {
   return (
     <>
-      {/* <Login /> */}
-      <DisplayFiles />
+      <Switch>
+        <Route path="/" component={Login} exact={true} />
+        <Route path="/files" component={DisplayFiles} exact={true} />
+      </Switch>
     </>
   );
 }
