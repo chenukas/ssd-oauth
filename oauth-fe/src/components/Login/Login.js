@@ -1,23 +1,14 @@
 import React, { Component } from "react";
+import GoogleLogin from "react-google-login";
 import { Avatar, Grid, Paper, Button } from "@material-ui/core";
 import axios from "axios";
 
 class Login extends Component {
-  constructor(props) {
-    super(props);
-  }
+  googleResponse = (response) => {
+    console.log(response);
+    console.log(response.profileObj);
+  };
 
-  
-  signIn() {
-    axios
-      .get("http://localhost:5000/getAuthURL")
-      .then((res) => {
-        console.log(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }
   render() {
     return (
       <Grid>
@@ -29,22 +20,20 @@ class Login extends Component {
             width: 280,
             margin: "80px auto",
             border_radius: "10px",
+            //backgroundColor: "#000000",
           }}
         >
           <Grid align="center">
             <Avatar src="/assests/lock.png"></Avatar>
             <h2>Sign In</h2>
           </Grid>
-          <Button
-            onClick={this.signIn}
-            type="submit"
-            color="primary"
-            variant="contained"
-            fullWidth
-            style={{ marginTop: "5%" }}
-          >
-            Sign In
-          </Button>
+          <GoogleLogin
+            clientId="363721304981-jd62e1e42257jketsjbtmgngac4bssq8.apps.googleusercontent.com"
+            buttonText="Sign In With Google"
+            onSuccess={this.googleResponse}
+            onFailure={this.googleResponse}
+            cookiePolicy={"single_host_origin"}
+          ></GoogleLogin>
         </Paper>
       </Grid>
     );
