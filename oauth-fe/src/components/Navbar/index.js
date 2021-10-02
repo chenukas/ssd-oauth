@@ -7,7 +7,7 @@ const Navbar = () => {
     <div>
       <nav class="navbar navbar-dark" style={{height: '4rem', backgroundColor: '#000000' }}>
         <div class="container-fluid">
-          <span class="navbar-brand mb-0 h1 fw-bolder fs-4">CloudPix</span>
+          <span class="navbar-brand mb-0 h1 fw-bolder fs-4">CLOUDPix</span>
           <Button
             variant="contained"
             style={{ backgroundColor: "#551a8b", color: "#fff", fontWeight: "bold" }}
