@@ -35,7 +35,7 @@ class Login extends Component {
             </Avatar>
           </Grid>
           <GoogleLogin
-            clientId="363721304981-jd62e1e42257jketsjbtmgngac4bssq8.apps.googleusercontent.com"
+            clientId="363721304981-di9vhhuei094b0fpht7l9oqlnqmv4nc5.apps.googleusercontent.com"
             render={(renderProps) => (
               <Button
                 onClick={renderProps.onClick}
