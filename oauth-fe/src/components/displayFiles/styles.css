@@ -1,7 +1,15 @@
 .file-icons {
   height: 1.5rem;
   width: 1.5rem;
-  display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.table-head {
+    margin-bottom: 1rem;
+    background: #000000;
+    color: #fff;
+    padding-bottom: 1rem;
+    padding-top: 1rem;
+    text-align: center;
 }
