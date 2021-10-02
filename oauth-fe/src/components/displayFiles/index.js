@@ -11,16 +11,16 @@ const DisplayFiles = () => {
         <div>
           <Button
             variant="contained"
-            style={{ backgroundColor: "#551a8b", color: "#fff" }}
+            style={{ backgroundColor: "#551a8b", color: "#fff", fontWeight: "bold" }}
           >
             Add a file
           </Button>
         </div>
       </div>
       <div className="row" style={{ marginBottom: "1rem", backgroundColor: "#000000", color: "#fff" }}>
-        <div className="col-6 text-uppercase fw-bold fs-4">Name</div>
-        <div className="col-3 text-uppercase fw-bold fs-4">Update</div>
-        <div className="col-3 text-uppercase fw-bold fs-4">Download</div>
+        <div className="col-6 fw-bold fs-4">Name</div>
+        <div className="col-3 fw-bold fs-4">Update</div>
+        <div className="col-3 fw-bold fs-4">Download</div>
       </div>
       <div className="row" style={{marginBottom: '0.5rem'}}>
         <div className="col-6 fs-5">Name</div>
