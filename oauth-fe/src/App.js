@@ -1,55 +1,13 @@
-import React, { Component } from "react";
-import { Avatar, Grid, Paper, Button } from "@material-ui/core";
-import axios from "axios";
+import React from "react";
 
-class Login extends Component {
-  constructor(props) {
-    super(props);
+import Login from "./components/Login/Login";
 
-    this.navigate = this.navigate.bind(this);
-  }
-
-  navigate() {
-    axios
-      .get("http://localhost:5000/getAuthURL")
-      .then((res) => {
-        console.log("Success");
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }
-  render() {
-    return (
-      <Grid>
-        <Paper
-          elevation={10}
-          style={{
-            padding: 50,
-            height: "30vh",
-            width: 280,
-            margin: "80px auto",
-            border_radius: "10px",
-          }}
-        >
-          <Grid align="center">
-            <Avatar src="/assests/lock.png"></Avatar>
-            <h2>Sign In</h2>
-          </Grid>
-          <Button
-            onClick={this.navigate}
-            type="submit"
-            color="primary"
-            variant="contained"
-            fullWidth
-            style={{ marginTop: "5%" }}
-          >
-            Sign In
-          </Button>
-        </Paper>
-      </Grid>
-    );
-  }
+function App() {
+  return (
+    <>
+      <Login />
+    </>
+  );
 }
 
-export default Login;
+export default App;
