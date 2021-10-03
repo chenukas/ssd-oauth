@@ -4,9 +4,12 @@ import { Button } from "@material-ui/core";
 import download from '../../images/download.png';
 import edit from '../../images/edit.png';
 import add from '../../images/add.png';
+import Navbar from "../Navbar";
 
 const DisplayFiles = () => {
   return (
+    <>
+    <Navbar />
     <div className="container">
       <div className="row" style={{ marginBottom: "3rem", marginTop: "2rem" }}>
         <div>
@@ -66,6 +69,7 @@ const DisplayFiles = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 
