@@ -125,6 +125,7 @@ const DisplayFiles = (props) => {
             <img src={download} className="file-icons" alt="download" />
           </div>
         </div>
+        <hr style={{marginTop: '0.5rem'}}/>
       </div>
     </div>
     </>
