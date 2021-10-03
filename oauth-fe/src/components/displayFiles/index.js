@@ -8,6 +8,7 @@ import add from "../../images/add.png";
 import axios from "axios";
 import { saveAs } from "file-saver";
 import { Card } from "react-bootstrap";
+import Navbar from "../Navbar";
 
 const DisplayFiles = (props) => {
   const [token, setToken] = useState({
@@ -62,145 +63,151 @@ const DisplayFiles = (props) => {
     }
   });
   return (
-    <div className="container">
-      <div className="row" style={{ marginBottom: "3rem", marginTop: "2rem" }}>
-        <div>
-          <Button
-            variant="contained"
-            style={{
-              backgroundColor: "#551a8b",
-              color: "#fff",
-              fontWeight: "bold",
-            }}
-            className="btn-text"
-            data-bs-toggle="modal"
-            data-bs-target="#staticBackdrop"
-          >
-            <img
-              src={add}
-              style={{ height: "0.8rem", width: "0.8rem" }}
-              alt="add"
-            />
-            &nbsp; Add Photos
-          </Button>
+    <>
+      <Navbar />
+      <div className="container">
+        <div
+          className="row"
+          style={{ marginBottom: "3rem", marginTop: "2rem" }}
+        >
+          <div>
+            <Button
+              variant="contained"
+              style={{
+                backgroundColor: "#551a8b",
+                color: "#fff",
+                fontWeight: "bold",
+              }}
+              className="btn-text"
+              data-bs-toggle="modal"
+              data-bs-target="#staticBackdrop"
+            >
+              <img
+                src={add}
+                style={{ height: "0.8rem", width: "0.8rem" }}
+                alt="add"
+              />
+              &nbsp; Add Photos
+            </Button>
+          </div>
         </div>
-      </div>
 
-      {/* Modal */}
-      <div
-        class="modal fade"
-        id="staticBackdrop"
-        data-bs-backdrop="static"
-        data-bs-keyboard="false"
-        tabindex="-1"
-        aria-labelledby="staticBackdropLabel"
-        aria-hidden="true"
-      >
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="staticBackdropLabel">
-                Add a new Photo
-              </h5>
-              <button
-                type="button"
-                class="btn-close"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-              ></button>
-            </div>
-            <div class="modal-body">
-              <form>
-                <div class="mb-3">
-                  <input
-                    class="form-control"
-                    type="file"
-                    id="formFileMultiple"
-                    multiple
-                  />
-                </div>
-              </form>
-            </div>
-            <div class="modal-footer">
-              <button
-                type="button"
-                class="btn btn-secondary"
-                data-bs-dismiss="modal"
-              >
-                Close
-              </button>
-              <button
-                type="button"
-                class="btn btn-dark"
-                style={{
-                  backgroundColor: "#551a8b",
-                  color: "#fff",
-                  fontWeight: "bold",
-                }}
-              >
-                Save
-              </button>
+        {/* Modal */}
+        <div
+          class="modal fade"
+          id="staticBackdrop"
+          data-bs-backdrop="static"
+          data-bs-keyboard="false"
+          tabindex="-1"
+          aria-labelledby="staticBackdropLabel"
+          aria-hidden="true"
+        >
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">
+                  Add a new Photo
+                </h5>
+                <button
+                  type="button"
+                  class="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                ></button>
+              </div>
+              <div class="modal-body">
+                <form>
+                  <div class="mb-3">
+                    <input
+                      class="form-control"
+                      type="file"
+                      id="formFileMultiple"
+                      multiple
+                    />
+                  </div>
+                </form>
+              </div>
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  data-bs-dismiss="modal"
+                >
+                  Close
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-dark"
+                  style={{
+                    backgroundColor: "#551a8b",
+                    color: "#fff",
+                    fontWeight: "bold",
+                  }}
+                >
+                  Save
+                </button>
+              </div>
             </div>
           </div>
         </div>
-      </div>
 
-      <div class="container">
-        <div class="row">
-          {files.length > 0 &&
-            files.map((file) => (
-              <div
-                href="https://unsplash.it/1200/768.jpg?image=251"
-                data-toggle="lightbox"
-                data-gallery="gallery"
-                class="col-md-4"
-                style={{ textDecoration: "none" }}
-              >
-                <img
-                  src={`https://drive.google.com/uc?export=view&id=${file.id}`}
-                  class="img-fluid rounded mb-3"
-                  style={{ width: 300, height: 200 }}
-                />
-                <Card.Body>
-                  <Card.Title style={{ color: "black", marginLeft: 100 }}>
-                    {file?.name?.split(".")[0]}
-                  </Card.Title>
-                  <div className="row">
-                    <div className="col-3" style={{ marginLeft: 50 }}>
-                      <div>
-                        <button
-                          className="btn"
-                          onClick={() => deleteFile(file.id)}
-                        >
-                          <img
-                            src={trash}
-                            className="file-icons"
-                            alt="delete"
-                          />
-                        </button>
+        <div class="container">
+          <div class="row">
+            {files.length > 0 &&
+              files.map((file) => (
+                <div
+                  href="https://unsplash.it/1200/768.jpg?image=251"
+                  data-toggle="lightbox"
+                  data-gallery="gallery"
+                  class="col-md-4"
+                  style={{ textDecoration: "none" }}
+                >
+                  <img
+                    src={`https://drive.google.com/uc?export=view&id=${file.id}`}
+                    class="img-fluid rounded mb-3"
+                    style={{ width: 300, height: 200 }}
+                  />
+                  <Card.Body>
+                    <Card.Title style={{ color: "black", marginLeft: 100 }}>
+                      {file?.name?.split(".")[0]}
+                    </Card.Title>
+                    <div className="row">
+                      <div className="col-3" style={{ marginLeft: 50 }}>
+                        <div>
+                          <button
+                            className="btn"
+                            onClick={() => deleteFile(file.id)}
+                          >
+                            <img
+                              src={trash}
+                              className="file-icons"
+                              alt="delete"
+                            />
+                          </button>
+                        </div>
+                      </div>
+                      <div className="col-3">
+                        <div>
+                          <button
+                            className="btn"
+                            onClick={() => downloadFile(file.id, file.name)}
+                          >
+                            <img
+                              src={download}
+                              className="file-icons"
+                              alt="download"
+                            />
+                          </button>
+                        </div>
                       </div>
                     </div>
-                    <div className="col-3">
-                      <div>
-                        <button
-                          className="btn"
-                          onClick={() => downloadFile(file.id, file.name)}
-                        >
-                          <img
-                            src={download}
-                            className="file-icons"
-                            alt="download"
-                          />
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </Card.Body>
-              </div>
-            ))}
+                  </Card.Body>
+                </div>
+              ))}
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
