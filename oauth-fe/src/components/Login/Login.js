@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
+import "./Login.css";
 import GoogleLogin from "react-google-login";
 import GoogleButton from "react-google-button";
 import { Avatar, Grid, Paper, Button } from "@material-ui/core";
 import LockIcon from "@mui/icons-material/Lock";
 import axios from "axios";
 import { useLocation } from "react-router";
-import Files from "../displayFiles/index";
+import Files from "../displayFiles/";
 
 const Login = () => {
   const [code, setCode] = useState(false);
@@ -49,18 +50,22 @@ const Login = () => {
               width: 300,
               marginLeft: "950px",
               marginTop: "150px",
-              border_radius: "10px",
+              borderRadius: "10px",
             }}
           >
-            <Grid align="center">
-              <Avatar sx={{ width: 60, height: 60 }}>
+            <Grid align="center" className="login-grid">
+              <div className="fw-bold fs-4" style={{textAlign: "left"}}>
+                Welcome!
+                <div className="fs-5">Login to your account or register with google</div>
+              </div>
+              {/* <Avatar sx={{ width: 60, height: 60 }}>
                 <LockIcon
                   marginTop="40px"
                   sx={{ color: "#551a8b" }}
                   fontSize="large"
                 />
-              </Avatar>
-            </Grid>
+              </Avatar> */}
+            
             <GoogleLogin
               clientId="363721304981-oumc9km7eqtlb23teoh1a113cu8dtean.apps.googleusercontent.com"
               render={(renderProps) => (
@@ -81,6 +86,7 @@ const Login = () => {
               )}
               cookiePolicy={"single_host_origin"}
             ></GoogleLogin>
+            </Grid>
           </Paper>
         </Grid>
       ) : (
