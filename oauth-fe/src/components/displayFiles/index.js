@@ -1,13 +1,16 @@
 import React from "react";
 import "./styles.css";
 import { Button } from "@material-ui/core";
-import download from "../../images/download.png";
-import edit from "../../images/edit.png";
-import add from "../../images/add.png";
+import download from '../../images/download.png';
+import edit from '../../images/edit.png';
+import add from '../../images/add.png';
+import Navbar from "../Navbar";
 
 const DisplayFiles = (props) => {
   console.log(props.token);
   return (
+    <>
+    <Navbar />
     <div className="container">
       <div className="row" style={{ marginBottom: "3rem", marginTop: "2rem" }}>
         <div>
@@ -122,8 +125,10 @@ const DisplayFiles = (props) => {
             <img src={download} className="file-icons" alt="download" />
           </div>
         </div>
+        <hr style={{marginTop: '0.5rem'}}/>
       </div>
     </div>
+    </>
   );
 };
 

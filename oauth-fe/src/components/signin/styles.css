@@ -1,0 +1,33 @@
+.card-container1 {
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.2);
+  /* overflow: hidden; */
+  width: 100%;
+  height: fit-content;
+  color: rgb(0, 0, 0);
+  padding: 3rem;
+  /* margin: 0.5rem; */
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+}
+
+.sign-topic {
+  font-size: 4rem;
+  text-align: left;
+  margin-left: 6rem;
+  font-weight: 1000;
+  background: #551a8b;
+  background: -webkit-linear-gradient(to right, #551a8b 0%, #000 100%);
+  background: -moz-linear-gradient(to right, #551a8b 0%, #000 100%);
+  background: linear-gradient(to right, #551a8b 0%, #000 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.svg-icon {
+  height: 20rem;
+  width: 100%;
+  margin-left: 6rem;
+}
