@@ -33,17 +33,21 @@ app.get("/getAuthURL", (req, res) => {
     access_type: "offline",
     scope: SCOPE,
   });
+  console.log(res);
   console.log(authUrl);
   return res.send(authUrl);
 });
 
 app.post("/getToken", (req, res) => {
   if (req.body.code == null) return res.status(400).send("Invalid Request");
-  oAuth2Client.getToken(req.body.code, (err, token) => {
+  var code = decodeURIComponent(req.body.code);
+  oAuth2Client.getToken(code, (err, token) => {
+    console.log(err);
     if (err) {
       console.error("Error retrieving access token", err);
       return res.status(400).send("Error retrieving access token");
     }
+    // console.log(code);
     res.send(token);
   });
 });
