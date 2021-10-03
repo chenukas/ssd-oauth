@@ -6,17 +6,21 @@
 }
 
 .table-head {
-    margin-bottom: 1rem;
-    background: #000000;
-    border-radius: 0.5rem;
-    color: #fff;
-    padding-bottom: 0.6rem;
-    padding-top: 0.6rem;
-    text-align: center;
+  margin-bottom: 1rem;
+  background: #000000;
+  border-radius: 0.5rem;
+  color: #fff;
+  padding-bottom: 0.6rem;
+  padding-top: 0.6rem;
+  text-align: center;
 }
 
 .btn-text {
-    display: flex;
-    align-items: center;
-    justify-content: center; 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.row {
+  margin: 15px;
 }

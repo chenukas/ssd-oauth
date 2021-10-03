@@ -2,23 +2,65 @@ import React, { useEffect, useState } from "react";
 import "./styles.css";
 import { Button } from "@material-ui/core";
 import download from "../../images/download.png";
+import trash from "../../images/trash.png";
 import edit from "../../images/edit.png";
 import add from "../../images/add.png";
 import axios from "axios";
+import { saveAs } from "file-saver";
+import { Card } from "react-bootstrap";
 
 const DisplayFiles = (props) => {
-  const [token, setToken] = useState();
+  const [token, setToken] = useState({
+    access_token: `${localStorage.getItem("accessToken")}`,
+  });
   const [files, setFiles] = useState([]);
   const [count, setCount] = useState(0);
-  /*useEffect(() => {
-    setToken(props.token);
+
+  const downloadFile = (id, image) => {
+    console.log(id);
+    console.log(image);
+    axios
+      .post(`http://localhost:5000/download/${id}`, { token })
+      .then((response) => {
+        console.log(response.data);
+        saveAs(
+          `https://drive.google.com/uc?export=view&id=${id}`,
+          image.split(".")[0]
+        );
+        var file = new Blob(
+          [`https://drive.google.com/uc?export=view&id=${id}`],
+          { type: "image/jpeg" }
+        );
+        saveAs(file, image.split(".")[0]);
+      });
+  };
+
+  const deleteFile = (id) => {
+    console.log(id);
+    axios
+      .post(`http://localhost:5000/deleteFile/${id}`, { token })
+      .then((res) => {
+        console.log(res.data);
+        window.location = "/files";
+      });
+  };
+
+  console.log(props.token);
+  useEffect(() => {
+    //setToken(props.token);
     if (count === 0) {
       axios.post(`http://localhost:5000/readDrive`, { token }).then((res) => {
-        setFiles(res.data);
+        //setFiles(res.data);
+        setFiles(
+          res.data?.filter(
+            (f) => f.mimeType === "image/jpeg" || f.mimeType === "image/png"
+          )
+        );
+        console.log(res.data);
       });
       setCount(count + 1);
     }
-  });*/
+  });
   return (
     <div className="container">
       <div className="row" style={{ marginBottom: "3rem", marginTop: "2rem" }}>
@@ -103,42 +145,60 @@ const DisplayFiles = (props) => {
         </div>
       </div>
 
-      <div className="row table-head">
-        <div
-          className="col-6 fw-bold fs-5"
-          style={{ textAlign: "left", paddingLeft: "1rem" }}
-        >
-          Name
+      <div class="container">
+        <div class="row">
+          {files.length > 0 &&
+            files.map((file) => (
+              <div
+                href="https://unsplash.it/1200/768.jpg?image=251"
+                data-toggle="lightbox"
+                data-gallery="gallery"
+                class="col-md-4"
+                style={{ textDecoration: "none" }}
+              >
+                <img
+                  src={`https://drive.google.com/uc?export=view&id=${file.id}`}
+                  class="img-fluid rounded mb-3"
+                  style={{ width: 300, height: 200 }}
+                />
+                <Card.Body>
+                  <Card.Title style={{ color: "black", marginLeft: 100 }}>
+                    {file?.name?.split(".")[0]}
+                  </Card.Title>
+                  <div className="row">
+                    <div className="col-3" style={{ marginLeft: 50 }}>
+                      <div>
+                        <button
+                          className="btn"
+                          onClick={() => deleteFile(file.id)}
+                        >
+                          <img
+                            src={trash}
+                            className="file-icons"
+                            alt="delete"
+                          />
+                        </button>
+                      </div>
+                    </div>
+                    <div className="col-3">
+                      <div>
+                        <button
+                          className="btn"
+                          onClick={() => downloadFile(file.id, file.name)}
+                        >
+                          <img
+                            src={download}
+                            className="file-icons"
+                            alt="download"
+                          />
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </Card.Body>
+              </div>
+            ))}
         </div>
-        <div className="col-3 fw-bold fs-5">Update</div>
-        <div className="col-3 fw-bold fs-5">Download</div>
-      </div>
-      <div
-        className="row"
-        style={{
-          marginBottom: "0.5rem",
-          textAlign: "center",
-          paddingLeft: "0.2rem",
-        }}
-      >
-        {files.length > 0 &&
-          files.map((file) => (
-            <div>
-              <div className="col-6 fs-6" style={{ textAlign: "left" }}>
-                {file?.name}
-              </div>
-              <div className="col-3">
-                <div>
-                  <img src={edit} className="file-icons" alt="edit" />
-                </div>
-              </div>
-              <div className="col-3">
-                <div>
-                  <img src={download} className="file-icons" alt="download" />
-                </div>
-              </div>
-            </div>
-          ))}
       </div>
     </div>
   );
