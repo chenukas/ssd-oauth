@@ -38,8 +38,6 @@ app.get("/getAuthURL", (req, res) => {
     access_type: "offline",
     scope: SCOPE,
   });
-  console.log(res);
-  console.log(authUrl);
   return res.send(authUrl);
 });
 
@@ -47,12 +45,10 @@ app.post("/getToken", (req, res) => {
   if (req.body.code == null) return res.status(400).send("Invalid Request");
   var code = decodeURIComponent(req.body.code);
   oAuth2Client.getToken(code, (err, token) => {
-    console.log(err);
     if (err) {
       console.error("Error retrieving access token", err);
       return res.status(400).send("Error retrieving access token");
     }
-    // console.log(code);
     res.send(token);
   });
 });
@@ -63,49 +59,11 @@ app.post("/getUserInfo", (req, res) => {
   const oauth2 = google.oauth2({ version: "v2", auth: oAuth2Client });
 
   oauth2.userinfo.get((err, response) => {
-    console.log(response);
-    console.log(err);
     if (err) res.status(400).send(err);
-    console.log(response.data);
     res.send(response.data);
   });
 });
 
-/*app.post("/fileUpload", (req, res) => {
-  var form = new formidable.IncomingForm();
-  form.parse(req, (err, fields, files) => {
-    if (err) return res.status(400).send(err);
-    const token = JSON.parse(fields.token);
-    console.log(token);
-    if (token == null) return res.status(400).send("Token not found");
-    oAuth2Client.setCredentials(token);
-    console.log(files.file);
-    const drive = google.drive({ version: "v3", auth: oAuth2Client });
-    const fileMetadata = {
-      name: files.file.name,
-    };
-    const media = {
-      mimeType: files.file.type,
-      body: fs.createReadStream(files.file.path),
-    };
-    drive.files.create(
-      {
-        resource: fileMetadata,
-        media: media,
-        fields: "id",
-      },
-      (err, file) => {
-        oAuth2Client.setCredentials(null);
-        if (err) {
-          console.error(err);
-          res.status(400).send(err);
-        } else {
-          res.send("Successful Uploaded");
-        }
-      }
-    );
-  });
-});*/
 
 app.post("/upload", upload, (req, res) => {
   var file = req.file;
@@ -149,7 +107,6 @@ app.post("/upload", upload, (req, res) => {
 });
 
 app.post("/readDrive", (req, res) => {
-  console.log("hello");
   if (req.body.token == null) return res.status(400).send("Token not found");
   oAuth2Client.setCredentials(req.body.token);
   const drive = google.drive({ version: "v3", auth: oAuth2Client });
@@ -159,18 +116,9 @@ app.post("/readDrive", (req, res) => {
     },
     (err, response) => {
       if (err) {
-        console.log("The API returned an error: " + err);
         return res.status(400).send(err);
       }
       const files = response.data.files;
-      if (files.length) {
-        console.log("Files:");
-        files.map((file) => {
-          console.log(`${file.name} (${file.id})`);
-        });
-      } else {
-        console.log("No files found.");
-      }
       res.send(files);
     }
   );
@@ -195,7 +143,6 @@ app.post("/download/:id", (req, res) => {
     { fileId: fileId, alt: "media" },
     { responseType: "stream" },
     function (err, response) {
-      console.log(response);
       response.data
         .on("end", () => {
           console.log("Done");

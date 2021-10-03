@@ -3,3 +3,12 @@
     background: '#000000'; 
     color: #fff;
 }
+
+.user-name {
+    color: '#fff';
+}
+
+.user-info {
+    position: relative;
+    float: right;
+}

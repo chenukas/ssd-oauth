@@ -18,12 +18,9 @@ const DisplayFiles = (props) => {
   const [count, setCount] = useState(0);
 
   const downloadFile = (id, image) => {
-    console.log(id);
-    console.log(image);
     axios
       .post(`http://localhost:5000/download/${id}`, { token })
       .then((response) => {
-        console.log(response.data);
         saveAs(
           `https://drive.google.com/uc?export=view&id=${id}`,
           image.split(".")[0]
@@ -37,16 +34,13 @@ const DisplayFiles = (props) => {
   };
 
   const deleteFile = (id) => {
-    console.log(id);
     axios
       .post(`http://localhost:5000/deleteFile/${id}`, { token })
       .then((res) => {
-        console.log(res.data);
         window.location = "/files";
       });
   };
 
-  console.log(props.token);
   useEffect(() => {
     //setToken(props.token);
     if (count === 0) {
@@ -57,7 +51,6 @@ const DisplayFiles = (props) => {
             (f) => f.mimeType === "image/jpeg" || f.mimeType === "image/png"
           )
         );
-        console.log(res.data);
       });
       setCount(count + 1);
     }
@@ -94,32 +87,32 @@ const DisplayFiles = (props) => {
 
         {/* Modal */}
         <div
-          class="modal fade"
+          className="modal fade"
           id="staticBackdrop"
           data-bs-backdrop="static"
           data-bs-keyboard="false"
-          tabindex="-1"
+          tabIndex="-1"
           aria-labelledby="staticBackdropLabel"
           aria-hidden="true"
         >
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="staticBackdropLabel">
+          <div className="modal-dialog">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title" id="staticBackdropLabel">
                   Add a new Photo
                 </h5>
                 <button
                   type="button"
-                  class="btn-close"
+                  className="btn-close"
                   data-bs-dismiss="modal"
                   aria-label="Close"
                 ></button>
               </div>
-              <div class="modal-body">
+              <div className="modal-body">
                 <form>
-                  <div class="mb-3">
+                  <div className="mb-3">
                     <input
-                      class="form-control"
+                      className="form-control"
                       type="file"
                       id="formFileMultiple"
                       multiple
@@ -127,17 +120,17 @@ const DisplayFiles = (props) => {
                   </div>
                 </form>
               </div>
-              <div class="modal-footer">
+              <div className="modal-footer">
                 <button
                   type="button"
-                  class="btn btn-secondary"
+                  className="btn btn-secondary"
                   data-bs-dismiss="modal"
                 >
                   Close
                 </button>
                 <button
                   type="button"
-                  class="btn btn-dark"
+                  className="btn btn-dark"
                   style={{
                     backgroundColor: "#551a8b",
                     color: "#fff",
@@ -151,20 +144,21 @@ const DisplayFiles = (props) => {
           </div>
         </div>
 
-        <div class="container">
-          <div class="row">
+        <div className="container">
+          <div className="row">
             {files.length > 0 &&
-              files.map((file) => (
+              files.map((file, key) => (
                 <div
-                  href="https://unsplash.it/1200/768.jpg?image=251"
-                  data-toggle="lightbox"
+                href="https://unsplash.it/1200/768.jpg?image=251"
+                data-toggle="lightbox"
                   data-gallery="gallery"
-                  class="col-md-4"
+                  className="col-md-4"
                   style={{ textDecoration: "none" }}
+                  key={key}
                 >
                   <img
                     src={`https://drive.google.com/uc?export=view&id=${file.id}`}
-                    class="img-fluid rounded mb-3"
+                    className="img-fluid rounded mb-3"
                     style={{ width: 300, height: 200 }}
                   />
                   <Card.Body>

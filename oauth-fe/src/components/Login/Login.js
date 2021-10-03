@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./Login.css";
 import GoogleLogin from "react-google-login";
-import GoogleButton from "react-google-button";
-import { Avatar, Grid, Paper, Button } from "@material-ui/core";
-import LockIcon from "@mui/icons-material/Lock";
+import { Grid, Paper, Button } from "@material-ui/core";
 import axios from "axios";
 import { useLocation } from "react-router";
 import Files from "../displayFiles/";
@@ -22,24 +20,18 @@ const Login = (props) => {
   };
 
   useEffect(() => {
-    console.log(location.search);
     if (location?.search) {
       setCode(location.search?.split("=")[1]?.split("&")[0]);
-      console.log(props.location);
       const key = new URLSearchParams(props.location.search).get("code");
-      console.log(key);
       axios
         .post(`http://localhost:5000/getToken`, { code: key })
         .then((res) => {
-          console.log(res.data);
           setToken(res.data);
           setCheck(true);
           localStorage.setItem("get", "get");
           localStorage.setItem("accessToken", res.data.access_token);
           window.location = "/files";
         });
-      //localStorage.setItem("token", token);
-      //console.log(token);
     } else {
       setCode(false);
     }
@@ -65,13 +57,6 @@ const Login = (props) => {
                 Welcome!
                 <div className="fs-5">Login to your account or register with google</div>
               </div>
-              {/* <Avatar sx={{ width: 60, height: 60 }}>
-                <LockIcon
-                  marginTop="40px"
-                  sx={{ color: "#551a8b" }}
-                  fontSize="large"
-                />
-              </Avatar> */}
             
             <GoogleLogin
               render={(renderProps) => (
